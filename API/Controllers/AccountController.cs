@@ -25,7 +25,7 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto dto)
         {
-            if(await UserExists(dto.UserName))
+            if(await UserExists(dto.Username))
             {
                 return BadRequest("Username is taken");
             }
@@ -33,7 +33,7 @@ namespace API.Controllers
             
             var user = new AppUser
             {
-                UserName = dto.UserName.ToLower(),
+                UserName = dto.Username.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(dto.Password)),
                 PasswordSalt = hmac.Key
             };
